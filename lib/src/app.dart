@@ -4,6 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:youtube_clone_app/src/Explore.dart';
 import 'package:youtube_clone_app/src/Home.dart';
+import 'package:youtube_clone_app/src/Library.dart';
+import 'package:youtube_clone_app/src/Plus.dart';
+import 'package:youtube_clone_app/src/Subs.dart';
 import 'package:youtube_clone_app/src/app_controller.dart';
 
 class App extends GetView<AppController> {
@@ -13,11 +16,24 @@ class App extends GetView<AppController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
-        if (controller.currentIndex.value == 0) {
-          return Home();
-        } else {
-          return Explore();
+        switch (RouteName.values[controller.currentIndex.value]) {
+          case RouteName.Home:
+            return Home();
+            break;
+          case RouteName.Explore:
+            return Explore();
+            break;
+          case RouteName.Plus:
+            return Plus();
+            break;
+          case RouteName.Subs:
+            return Subs();
+            break;
+          case RouteName.Library:
+            return Library();
+            break;
         }
+        return Container();
       }),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
