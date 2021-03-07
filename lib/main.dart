@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:youtube_clone_app/src/app.dart';
+import 'package:youtube_clone_app/src/app_controller.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: "/",
+      initialBinding: InitBinding(),
+      // initialRoute: "/",
       getPages: [GetPage(name: "/", page: () => App())],
     );
   }
