@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:youtube_clone_app/src/video_widget.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -14,12 +16,11 @@ class Home extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 150,
-                color: Colors.white70,
-              ),
+            return GestureDetector(
+              child: VideoWidget(),
+              onTap: () {
+                Get.toNamed("/detail/jiho9526");
+              },
             );
           }),
         )
