@@ -1,31 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:youtube_clone_app/src/HomeController.dart';
 import 'package:youtube_clone_app/src/video_widget.dart';
 
 class Home extends StatelessWidget {
+  final HomeController controller = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          title: CustomAppBar(),
-          floating: true,
-          snap: true,
+      child: Obx(
+        () => CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: CustomAppBar(),
+              floating: true,
+              snap: true,
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return GestureDetector(
+                    child: VideoWidget(
+                        video: controller.youtubeResult.value.items[index]),
+                    onTap: () {
+                      Get.toNamed("/detail/jiho9526");
+                    },
+                  );
+                },
+                childCount: controller.youtubeResult.value.items == null
+                    ? 0
+                    : controller.youtubeResult.value.items.length,
+              ),
+            )
+          ],
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate((context, index) {
-            return GestureDetector(
-              child: VideoWidget(),
-              onTap: () {
-                Get.toNamed("/detail/jiho9526");
-              },
-            );
-          }),
-        )
-      ],
-    ));
+      ),
+    );
   }
 }
 

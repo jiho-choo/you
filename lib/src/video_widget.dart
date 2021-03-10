@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:youtube_clone_app/src/models/video.dart';
 
 class VideoWidget extends StatelessWidget {
+  final Video video;
+  const VideoWidget({Key key, this.video}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,31 +30,62 @@ class VideoWidget extends StatelessWidget {
             width: 15,
           ),
           Expanded(
-              child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      "아수라 발발발~ 수리수리 마아수리, 아브라 카타블, 하쿠나 마타타 ~~~~~",
-                      maxLines: 2,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(video.snippet.title, maxLines: 2),
                     ),
-                  ),
-                  IconButton(
+                    IconButton(
                       alignment: Alignment.topCenter,
-                      icon: Icon(Icons.more_vert),
-                      onPressed: () {})
-                ],
-              )
-            ],
-          ))
+                      icon: Icon(Icons.more_vert, size: 18),
+                      onPressed: () {},
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      video.snippet.channelTitle,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black.withOpacity(0.8),
+                      ),
+                    ),
+                    Text(" · "),
+                    Text(
+                      "조회수 000건",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black.withOpacity(0.6),
+                      ),
+                    ),
+                    Text(" · "),
+                    Text(
+                      DateFormat("yyyy-MM-dd")
+                          .format(video.snippet.publishTime),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black.withOpacity(0.6),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
   }
 
   Widget _thumbnail() {
-    return Container(height: 250, color: Colors.grey.withOpacity(0.5));
+    return Container(
+      height: 250,
+      color: Colors.grey.withOpacity(0.5),
+      child: Image.network(video.snippet.thumbnails.high.url, fit: BoxFit.none),
+    );
   }
 }

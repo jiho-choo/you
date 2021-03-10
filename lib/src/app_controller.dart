@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:youtube_clone_app/src/HomeController.dart';
 import 'package:youtube_clone_app/src/youtube_bottom_sheet.dart';
 
 enum RouteName { Home, Explore, Plus, Subs, Library }
@@ -22,6 +23,7 @@ class AppController extends GetxService {
 class InitBinding implements Bindings {
   @override
   void dependencies() {
+    Get.put(YoutubeRepository(), permanent: true);
     Get.put(AppController());
   }
 }
