@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/connect.dart';
 
 import 'package:youtube_clone_app/src/models/youtubeVideoResult.dart';
+import 'package:youtube_clone_app/src/statistics.dart';
 
 class HomeController extends GetxController {
   static HomeController get to => Get.find();
@@ -52,6 +53,20 @@ class YoutubeRepository extends GetConnect {
         return Future.error(response.statusText);
       }
       // print(response.body["items"]);
+    }
+  }
+
+  Future<Statistics> getVideoInfoById(String videoId) async {
+    String url =
+        "/youtube/v3/videos?part=statistics&key=AIzaSyBRQWat0h2wtDGdodY-G0NsijWlD4cIHso&id=$videoId";
+    final response = await get(url);
+    if (response.status.hasError) {
+      return Future.error(response.statusText);
+    } else {
+      if (response.body["items"] != null && response.body["items"].length > 0) {
+        Map<String, dynamic> data = response.body["items"][0];
+        return Statistics.fromJson(data["statistics"]);
+      }
     }
   }
 }

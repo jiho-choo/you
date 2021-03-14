@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:youtube_clone_app/src/models/video.dart';
+import 'package:youtube_clone_app/src/video_controller.dart';
 
-class VideoWidget extends StatelessWidget {
+class VideoWidget extends StatefulWidget {
   final Video video;
   const VideoWidget({Key key, this.video}) : super(key: key);
+
+  @override
+  _VideoWidgetState createState() => _VideoWidgetState();
+}
+
+class _VideoWidgetState extends State<VideoWidget> {
+  VideoController _controller;
+
+  @override
+  void initState() {
+    _controller = Get.put(VideoController(video: widget.video),
+        tag: widget.video.id.videoId);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +53,7 @@ class VideoWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Text(video.snippet.title, maxLines: 2),
+                      child: Text(widget.video.snippet.title, maxLines: 2),
                     ),
                     IconButton(
                       alignment: Alignment.topCenter,
@@ -48,7 +65,7 @@ class VideoWidget extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      video.snippet.channelTitle,
+                      widget.video.snippet.channelTitle,
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.black.withOpacity(0.8),
@@ -65,7 +82,7 @@ class VideoWidget extends StatelessWidget {
                     Text(" · "),
                     Text(
                       DateFormat("yyyy-MM-dd")
-                          .format(video.snippet.publishTime),
+                          .format(widget.video.snippet.publishTime),
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.black.withOpacity(0.6),
@@ -85,7 +102,8 @@ class VideoWidget extends StatelessWidget {
     return Container(
       height: 250,
       color: Colors.grey.withOpacity(0.5),
-      child: Image.network(video.snippet.thumbnails.high.url, fit: BoxFit.none),
+      child: Image.network(widget.video.snippet.thumbnails.high.url,
+          fit: BoxFit.none),
     );
   }
 }
